@@ -10,10 +10,10 @@
 
 ### Non-Functional Requirements
 
-| Requirement | Design Principle |
-| Scalability | Supports 50,000 concurrent users |
-| Availability | System remains available during peak traffic |
-| Security | Protects user accounts and sensitive student data |
+| Non-Functional Requirement | Design Principle |
+| Supports 50,000 concurrent users | Scalability |
+| System remains available during peak traffic | Availability |
+| Protects user accounts and sensitive student data | Security |
 
 ---
 
@@ -46,15 +46,42 @@ Microservices architecture is recommended because it supports independent scalin
 
 ### Presentation Layer
 
-Receives user requests through browser or mobile application and sends responses to users.
+**Receives:**
+- Login requests
+- Course enrollment requests
+- Marks viewing requests
+
+**Passes:**
+- User input to the Business Layer
+
+---
 
 ### Business Layer
 
-Processes business logic such as enrollment, authentication, and marks calculation.
+**Receives:**
+- Requests from the Presentation Layer
+
+**Processes:**
+- Authentication
+- Course enrollment
+- Marks calculation
+- Business rules
+
+**Passes:**
+- Database operations to the Data Access Layer
+
+---
 
 ### Data Access Layer
 
-Reads and writes data from the database using SQL queries.
+**Receives:**
+- SQL operations from the Business Layer
+
+**Processes:**
+- Reads and writes data in the database
+
+**Passes:**
+- Query results back to the Business Layer
 
 ---
 
@@ -72,22 +99,22 @@ Round Robin distributes requests evenly across available servers.
 
 ## (d) Elasticity
 
-Elasticity automatically increases the number of servers during examination result publication and decreases servers during semester breaks, reducing infrastructure cost.
+Elasticity automatically increases the number of servers during examination result publication and decreases the number of servers during semester breaks, reducing infrastructure cost while maintaining application performance.
 
 ---
 
 ## (e) Session Problem
 
-If Server A creates a session and the next request goes to Server B, the user session is unavailable.
+If Server A creates a session and the next request goes to Server B, the user session is unavailable because the session exists only on Server A.
 
 ### Solution 1
 
-Sticky Sessions at the Load Balancer.
+Use **Sticky Sessions** at the Load Balancer.
 
-**Trade-off:** Poor load distribution.
+**Trade-off:** Poor load distribution and reduced fault tolerance if a server fails.
 
 ### Solution 2
 
-Use a Shared Session Store (Redis or Database).
+Use a **Shared Session Store** (Redis or Database).
 
-**Trade-off:** Additional infrastructure cost but better scalability.
+**Trade-off:** Additional infrastructure cost but provides better scalability, reliability, and session availability.
