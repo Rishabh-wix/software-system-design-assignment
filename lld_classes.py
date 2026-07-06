@@ -35,13 +35,17 @@ class WaitlistedEnrollment(Enrollment):
 class EnrollmentRepository(ABC):
 
     @abstractmethod
-    def save(self, enrollment: Enrollment):
+    def save(self, enrollment: Enrollment) -> None:
         pass
 
     @abstractmethod
-    def find_by_student(self, student_id: int):
+    def find_by_student(self, student_id: int) -> Enrollment:
         pass
 
     @abstractmethod
-    def delete(self, enrollment_id: int):
+    def delete(self, enrollment_id: int) -> None:
         pass
+Bas ye 3 changes hue hain:
+def save(self, enrollment: Enrollment) -> None:
+def find_by_student(self, student_id: int) -> Enrollment:
+def delete(self, enrollment_id: int) -> None:
